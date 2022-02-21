@@ -2,6 +2,7 @@ android {
     flavorDimensions "env"
     productFlavors {
         dev {
+            buildConfigField "String", "SERVER_URL", '""'
         }
     }
 
