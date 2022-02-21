@@ -1,0 +1,24 @@
+apply plugin: 'java-library'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation 'org.uniflow-kt:uniflow-core:1.1.0'
+    testImplementation 'org.uniflow-kt:uniflow-test:1.1.0'
+
+    implementation 'org.uniflow-kt:uniflow-saferesult:1.1.0'
+    implementation 'org.uniflow-kt:uniflow-arrow:1.1.0'
+
+    implementation "javax.inject:javax.inject:1"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+
+
+    implementation "com.google.dagger:hilt-core:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
+
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
