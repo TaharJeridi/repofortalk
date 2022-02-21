@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import it.wakala.talkrepo.RemoteDataSourceImpl
+import it.wakala.talkrepo.datasource.RemoteDataSourceImpl
 import it.wakala.talkrepo.datasource.RemoteDataSource
 import it.wakala.talkrepo.repository.RemoteRepositoryImpl
 import repositories.RemoteRepository
