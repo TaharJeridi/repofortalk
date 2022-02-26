@@ -10,9 +10,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import it.wakala.talkrepo.BuildConfig
 import it.wakala.talkrepo.api.RemoteApi
+import it.wakala.talkrepo.ext.md5
 import okhttp3.Cache
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import okio.HashingSink
+import okio.Sink
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -23,25 +28,41 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+    fun provideOkHttpInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(@ApplicationContext context: Context, okHttpLoggingInterceptor: HttpLoggingInterceptor, cache: Cache): OkHttpClient {
+    fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor()
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(
+        @ApplicationContext context: Context,
+        okHttpLoggingInterceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor,
+        cache: Cache
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .cache(cache)
             .addInterceptor { chain ->
                 val request = chain.request()
-                val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val connectivityManager =
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
                 if (connectivityManager.activeNetwork != null) {
                     request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
                 } else {
-                    request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
+                    request.newBuilder().header(
+                        "Cache-Control",
+                        "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
+                    ).build()
                 }
                 chain.proceed(request)
             }
-            .addInterceptor(okHttpLoggingInterceptor).build()
+            .addInterceptor(okHttpLoggingInterceptor)
+            .addInterceptor(authInterceptor)
+            .build()
     }
 
     @Singleton
@@ -61,5 +82,25 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClientCache(@ApplicationContext context: Context): Cache =
         Cache(context.cacheDir, (10 * 1024 * 1024).toLong())
+
+}
+
+class AuthInterceptor() : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val currentTime = System.currentTimeMillis().toString()
+        val publicApiKey = ""
+        val privateApiKey = ""
+
+        return chain.run {
+            proceed(
+                chain.request()
+                    .newBuilder()
+                    .addHeader("ts", currentTime)
+                    .addHeader("apikey", "")
+                    .addHeader("hash", "$currentTime$publicApiKey$privateApiKey".md5())
+                    .build()
+            )
+        }
+    }
 
 }

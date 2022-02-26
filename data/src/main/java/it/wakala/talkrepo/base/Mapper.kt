@@ -1,7 +1,7 @@
-package it.mirco.pokedex.base
+package it.wakala.talkrepo.base
 
-interface Mapper<T, K, P> {
+abstract class Mapper<T, K, P>(params: P? = null) {
 
-    fun mapToEntity(input: T, params: P? = null): K
+    abstract fun mapToEntity(input: T): K
 
 }

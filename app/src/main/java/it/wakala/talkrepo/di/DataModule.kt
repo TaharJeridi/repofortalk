@@ -7,7 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import it.wakala.talkrepo.datasource.RemoteDataSourceImpl
 import it.wakala.talkrepo.datasource.RemoteDataSource
 import it.wakala.talkrepo.repository.RemoteRepositoryImpl
-import repositories.RemoteRepository
+import it.wakala.talkrepo.repositories.RemoteRepository
 import javax.inject.Singleton
 
 @Module
