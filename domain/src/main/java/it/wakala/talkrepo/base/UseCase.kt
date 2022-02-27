@@ -1,4 +1,4 @@
-package base
+package it.wakala.talkrepo.base
 
 interface UseCase<K, T> {
 
