@@ -9,6 +9,19 @@
         android:id="@+id/navigation_home"
         android:name="it.wakala.talkrepo.ui.fragment.HomeFragment"
         android:label="HOME"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment">
+
+        <action
+            android:id="@+id/action_home_to_comics"
+            app:destination="@id/navigation_comics" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_comics"
+        android:name="it.wakala.comics.ComicsFragment"
+        android:label="COMICS"
+        tools:layout="@layout/comics_fragment" />
+
 
 </navigation>

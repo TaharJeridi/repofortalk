@@ -6,7 +6,7 @@
         android:title="HOME" />
 
     <item
-        android:id="@+id/comics"
+        android:id="@+id/navigation_comics"
         android:title="COMICS" />
 
 </menu>
