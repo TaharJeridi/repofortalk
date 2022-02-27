@@ -1,20 +1,21 @@
 package it.wakala.talkrepo.base
 
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.viewbinding.ViewBinding
 
-abstract class ABaseActivity : AppCompatActivity() {
+abstract class ABaseActivity<T : ViewBinding> : AppCompatActivity() {
+
+    val binding: T by lazy { setBinding() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { BuildLayout() }
+        setContentView(binding.root)
     }
 
+    /*
+    * abstract method
+    */
 
-    @Preview
-    @Composable
-    abstract fun BuildLayout()
+    abstract fun setBinding(): T
 }

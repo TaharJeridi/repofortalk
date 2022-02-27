@@ -1,16 +1,13 @@
 package it.wakala.talkrepo.ui.activity
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import it.wakala.talkrepo.base.ABaseActivity
+import it.wakala.talkrepo.databinding.ActivityMainBinding
 
-class MainActivity : ABaseActivity() {
+class MainActivity : ABaseActivity<ActivityMainBinding>() {
 
-    @Preview
-    @Composable
-    override fun BuildLayout() {
-        return Text("Wakala dev")
+    override fun setBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
     }
+
 
 }
