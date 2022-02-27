@@ -1,30 +1,13 @@
 package it.wakala.talkrepo.ui.activity
 
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import it.wakala.talkrepo.base.ABaseActivity
+import it.wakala.talkrepo.databinding.ActivityMainBinding
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : ABaseActivity<ActivityMainBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            PreviewGreetings()
-        }
+    override fun setBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
     }
 
-    @Composable
-    fun Greeting(name: String) {
-        Text(text = "Hello $name!")
-    }
-
-    @Preview
-    @Composable
-    fun PreviewGreetings() {
-        Greeting("Wakala dev")
-    }
 
 }
