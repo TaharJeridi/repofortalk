@@ -9,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import it.wakala.talkrepo.BuildConfig
+import it.wakala.talkrepo.R
 import it.wakala.talkrepo.api.RemoteApi
 import it.wakala.talkrepo.ext.md5
 import okhttp3.Cache
@@ -20,6 +21,7 @@ import okio.HashingSink
 import okio.Sink
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.nio.charset.Charset
 import javax.inject.Singleton
 
 @Module
@@ -31,20 +33,38 @@ object NetworkModule {
     fun provideOkHttpInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
-    @Singleton
+    /*@Singleton
     @Provides
-    fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor()
+    fun provideAuthInterceptor(@ApplicationContext context: Context): AuthInterceptor = AuthInterceptor(context)*/
 
     @Singleton
     @Provides
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
         okHttpLoggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: AuthInterceptor,
         cache: Cache
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .cache(cache)
+            .addInterceptor { chain ->
+                val currentTime = System.currentTimeMillis().toString()
+                val publicApiKey = context.resources.openRawResource(R.raw.public_key)
+                    .bufferedReader(Charset.defaultCharset()).readLine()
+                val privateApiKey = context.resources.openRawResource(R.raw.private_key)
+                    .bufferedReader(Charset.defaultCharset()).readLine()
+
+                val request = chain.request()
+                val originalUrl = request.url
+
+                val newUrl = originalUrl.newBuilder()
+                    .addQueryParameter("ts", currentTime)
+                    .addQueryParameter("apikey", publicApiKey)
+                    .addQueryParameter("hash", "$currentTime$privateApiKey$publicApiKey".md5())
+                    .build()
+
+                val newRequest = request.newBuilder().url(newUrl).build()
+                chain.proceed(newRequest)
+            }
             .addInterceptor { chain ->
                 val request = chain.request()
                 val connectivityManager =
@@ -61,7 +81,6 @@ object NetworkModule {
                 chain.proceed(request)
             }
             .addInterceptor(okHttpLoggingInterceptor)
-            .addInterceptor(authInterceptor)
             .build()
     }
 
@@ -85,22 +104,23 @@ object NetworkModule {
 
 }
 
-class AuthInterceptor() : Interceptor {
+/*
+class AuthInterceptor(private val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val currentTime = System.currentTimeMillis().toString()
-        val publicApiKey = ""
-        val privateApiKey = ""
+        val publicApiKey = context.resources.openRawResource(R.raw.public_key).bufferedReader(Charset.defaultCharset()).readLine()
+        val privateApiKey = context.resources.openRawResource(R.raw.private_key).bufferedReader(Charset.defaultCharset()).readLine()
 
         return chain.run {
             proceed(
                 chain.request()
                     .newBuilder()
                     .addHeader("ts", currentTime)
-                    .addHeader("apikey", "")
+                    .addHeader("apikey", publicApiKey)
                     .addHeader("hash", "$currentTime$publicApiKey$privateApiKey".md5())
                     .build()
             )
         }
     }
 
-}
+}*/

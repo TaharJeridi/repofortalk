@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface RemoteApi {
 
-    @GET
+    @GET("/v1/public/characters")
     suspend fun getMarvelCharacters(): MarvelCharsResponse
 
 }
