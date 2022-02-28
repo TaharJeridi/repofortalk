@@ -74,9 +74,6 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 
-app/src/main/res/raw/public_key.txt
-app/src/main/res/raw/private_key.txt
-
 # Version control
 vcs.xml
 
