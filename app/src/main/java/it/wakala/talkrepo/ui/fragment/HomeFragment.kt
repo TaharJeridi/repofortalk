@@ -11,7 +11,10 @@ import it.wakala.talkrepo.base.ABaseFragment
 import it.wakala.talkrepo.databinding.HomeFragmentBinding
 import it.wakala.talkrepo.entity.MarvelCharsEntity
 import it.wakala.talkrepo.entity.ResultEntity
+import it.wakala.talkrepo.ext.gridPagination
 import it.wakala.talkrepo.ui.adapter.MarvelCharactersListAdapter
+import it.wakala.talkrepo.ui.state.Loading
+import it.wakala.talkrepo.ui.state.Success
 import it.wakala.talkrepo.ui.viewmodel.MarvelCharactersViewModel
 import timber.log.Timber
 
@@ -26,39 +29,32 @@ class HomeFragment : ABaseFragment<HomeFragmentBinding>() {
         return HomeFragmentBinding.inflate(layoutInflater)
     }
 
-
-
     private var isLoading = false
-    private var isLatestElementVisible = false
-    private var isFirstStartFailed = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             marvelCharactersList.adapter = mAdapter
-            marvelCharactersList.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (dy > 0) {
-                        val layoutManager = marvelCharactersList.layoutManager as GridLayoutManager
-                        val visibleItemCount = layoutManager.findLastCompletelyVisibleItemPosition() + 1
-                        if (visibleItemCount == layoutManager.itemCount && !isLoading) {
-                            isLatestElementVisible = true
-                            marvelCharactersViewModel.getMarvelCharactersList(true)
-                        }else{
-                            isLatestElementVisible = false
-                        }
-                    }
-                }
-            })
+            marvelCharactersList.gridPagination() {
+                if(!isLoading) marvelCharactersViewModel.getMarvelCharactersList(true)
+            }
 
         }
 
         marvelCharactersViewModel.marvelCharactersLiveData.observe(viewLifecycleOwner) {
             if (it.isSuccess) {
-                val marvelChars = it.getOrNull()
-                mAdapter.data = marvelChars?.data?.results?.toMutableList() ?: mutableListOf()
+                val marvelChars = it.getOrNull() ?: return@observe
+                when (marvelChars) {
+                    is Loading -> {
+                        isLoading = true
+                    }
+                    is Success -> {
+                        mAdapter.data = marvelChars.marvelCharsEntity.data.results.toMutableList()
+                        isLoading = false
+                    }
+                }
+
             } else {
                 Timber.e(it.exceptionOrNull())
             }
