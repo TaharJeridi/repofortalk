@@ -19,11 +19,13 @@ class MarvelCharactersViewModel @Inject constructor(
 
     val marvelCharactersLiveData = MutableLiveData<Result<MarvelCharsEntity>>()
 
+    private var currentOffset = 0
 
-    fun getMarvelCharactersList() {
+    fun getMarvelCharactersList(increaseOffset: Boolean = false) {
         viewModelScope.launch(coroutineExceptionHandler) {
             withContext(Dispatchers.IO) {
-                val marvelCharacters = Result.success(getMarvelCharactersUseCase.execute(GetMarvelCharactersUseCase.Params()))
+                if(increaseOffset) currentOffset += 20
+                val marvelCharacters = Result.success(getMarvelCharactersUseCase.execute(GetMarvelCharactersUseCase.Params(currentOffset)))
                 marvelCharactersLiveData.postValue(marvelCharacters)
             }
         }

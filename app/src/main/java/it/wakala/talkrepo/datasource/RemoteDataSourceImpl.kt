@@ -11,7 +11,7 @@ class RemoteDataSourceImpl @Inject constructor(
     private val marvelCharsResponseEntityMapper: MarvelCharsResponseEntityMapper
 ) : RemoteDataSource {
 
-    override suspend fun getMarvelCharacters(): MarvelCharsEntity {
-        return marvelCharsResponseEntityMapper.mapToEntity(remoteApi.getMarvelCharacters())
+    override suspend fun getMarvelCharacters(offset: Int): MarvelCharsEntity {
+        return marvelCharsResponseEntityMapper.mapToEntity(remoteApi.getMarvelCharacters(offset))
     }
 }

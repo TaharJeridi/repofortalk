@@ -5,6 +5,6 @@ import it.wakala.talkrepo.entity.MarvelCharsEntity
 
 interface RemoteRepository {
 
-    suspend fun getAllCharacters(): MarvelCharsEntity
+    suspend fun getAllCharacters(offset: Int): MarvelCharsEntity
 
 }

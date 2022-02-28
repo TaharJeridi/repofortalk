@@ -10,9 +10,9 @@ class GetMarvelCharactersUseCase @Inject constructor(
 ) : UseCase<GetMarvelCharactersUseCase.Params, MarvelCharsEntity> {
 
     override suspend fun execute(param: Params): MarvelCharsEntity {
-        return remoteRepository.getAllCharacters()
+        return remoteRepository.getAllCharacters(param.offset)
     }
 
-    class Params
+    data class Params(val offset: Int)
 
 }

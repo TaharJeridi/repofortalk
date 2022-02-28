@@ -4,5 +4,5 @@ import it.wakala.talkrepo.entity.MarvelCharsEntity
 
 
 interface RemoteDataSource {
-    suspend fun getMarvelCharacters(): MarvelCharsEntity
+    suspend fun getMarvelCharacters(offset: Int): MarvelCharsEntity
 }
