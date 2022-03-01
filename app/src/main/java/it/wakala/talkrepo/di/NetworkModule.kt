@@ -12,6 +12,7 @@ import it.wakala.talkrepo.BuildConfig
 import it.wakala.talkrepo.R
 import it.wakala.talkrepo.api.RemoteApi
 import it.wakala.talkrepo.ext.md5
+import it.wakala.talkrepo.utils.ResolverAuthCredential
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -44,10 +45,8 @@ object NetworkModule {
             .cache(cache)
             .addInterceptor { chain ->
                 val currentTime = System.currentTimeMillis().toString()
-                val publicApiKey = context.resources.openRawResource(R.raw.public_key)
-                    .bufferedReader(Charset.defaultCharset()).readLine()
-                val privateApiKey = context.resources.openRawResource(R.raw.private_key)
-                    .bufferedReader(Charset.defaultCharset()).readLine()
+                val publicApiKey = ResolverAuthCredential.getPublicKey(context)
+                val privateApiKey = ResolverAuthCredential.getPrivateKey(context)
 
                 val request = chain.request()
                 val originalUrl = request.url
