@@ -2,7 +2,7 @@ package it.wakala.talkrepo.ui
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
-import it.wakala.talkrepo.AppContainer
+import it.wakala.talkrepo.manualdi.AppContainer
 import it.wakala.talkrepo.BuildConfig
 import timber.log.Timber
 

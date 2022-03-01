@@ -1,10 +1,10 @@
-package it.wakala.talkrepo
+package it.wakala.talkrepo.manualdi
 
 import it.wakala.talkrepo.repositories.IRepository
 
 class RepositoryContainer {
 
-    var mapRepo:HashMap<String, IRepository> = HashMap()
+    var mapRepo: HashMap<String, IRepository> = HashMap()
 
     fun saveRepository(key: String, repository: IRepository) {
         if (!mapRepo.containsKey(key)) {
@@ -16,7 +16,7 @@ class RepositoryContainer {
         return mapRepo[key]
     }
 
-    fun removeRemo(key: String) {
+    fun removeRepo(key: String) {
         mapRepo.remove(key)
     }
 }

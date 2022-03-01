@@ -1,4 +1,4 @@
-package it.wakala.talkrepo
+package it.wakala.talkrepo.manualdi
 
 
 class AppContainer {

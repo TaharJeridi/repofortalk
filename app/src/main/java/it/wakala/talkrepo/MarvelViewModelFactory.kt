@@ -3,6 +3,8 @@ package it.wakala.talkrepo
 import android.app.Application
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
+import it.wakala.talkrepo.base.ABaseViewModel
+import it.wakala.talkrepo.base.LifecycleViewModelCallback
 import it.wakala.talkrepo.base.UseCase
 import it.wakala.talkrepo.repositories.IRepository
 import it.wakala.talkrepo.ui.App
@@ -27,7 +29,7 @@ class MarvelViewModelFactory<UC : UseCase<*, *>, RP : IRepository>(
                     }
                     viewModelRequireInjectApplicationAndUseCase(modelClass, useCase) -> {
                         val repositoryInstance = getRepository(repositoryCall)
-                        val useCaseInstance = getUseCase(useCase,repositoryInstance)
+                        val useCaseInstance = getUseCase(useCase, repositoryInstance)
                         App.appContainer.repositoryContainer.saveRepository(
                             repositoryInstance::class.java.name,
                             repositoryInstance
@@ -40,7 +42,21 @@ class MarvelViewModelFactory<UC : UseCase<*, *>, RP : IRepository>(
                             .newInstance(
                                 application,
                                 useCaseInstance
-                            )
+                            ).also {
+                                if (it is ABaseViewModel) {
+                                    it.callBackLifeCycleViewModel =
+                                        object : LifecycleViewModelCallback {
+                                            override fun onCleared() {
+                                                App.appContainer.useCaseContainer.removeUseCase(
+                                                    useCaseInstance::class.java.name
+                                                )
+                                                App.appContainer.repositoryContainer.removeRepo(
+                                                    repositoryInstance::class.java.name
+                                                )
+                                            }
+                                        }
+                                }
+                            }
                     }
                     else -> {
                         throw RuntimeException("viewModel not recognized")
@@ -89,7 +105,7 @@ class MarvelViewModelFactory<UC : UseCase<*, *>, RP : IRepository>(
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun <UC : UseCase<*, *>> getUseCase(useCase: Class<UC>, repositoryInstance:RP): UC {
+    private fun <UC : UseCase<*, *>> getUseCase(useCase: Class<UC>, repositoryInstance: RP): UC {
         App.appContainer.useCaseContainer.getUseCase(useCase.name)?.let {
             return it as UC
         } ?: kotlin.run {

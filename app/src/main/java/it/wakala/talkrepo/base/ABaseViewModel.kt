@@ -9,8 +9,15 @@ open class ABaseViewModel(application: Application) : AndroidViewModel(applicati
 
     val errorLiveData = MutableLiveData<StatefulData.Error>()
 
+    var callBackLifeCycleViewModel: LifecycleViewModelCallback? = null
+
     var exceptionHandler = CoroutineExceptionHandler { _, exception ->
         errorLiveData.postValue(StatefulData.Error(exception))
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        callBackLifeCycleViewModel?.onCleared()
     }
 
 }
