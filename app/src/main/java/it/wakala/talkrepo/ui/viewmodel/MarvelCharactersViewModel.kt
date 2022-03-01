@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import it.wakala.talkrepo.base.coroutineExceptionHandler
-import it.wakala.talkrepo.entity.MarvelCharsEntity
 import it.wakala.talkrepo.ui.state.Loading
 import it.wakala.talkrepo.ui.state.MarvelCharactersState
 import it.wakala.talkrepo.ui.state.Success
+import it.wakala.talkrepo.ui.uimodel.toUiModel
 import it.wakala.talkrepo.usecase.GetMarvelCharactersUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ class MarvelCharactersViewModel @Inject constructor(
                 val marvelCharacters = getMarvelCharactersUseCase.execute(
                     GetMarvelCharactersUseCase.Params(currentOffset)
                 )
-                marvelCharactersLiveData.postValue(Result.success(Success(marvelCharacters)))
+                marvelCharactersLiveData.postValue(Result.success(Success(marvelCharacters.data.results.map { it.toUiModel() })))
             }
         }
     }

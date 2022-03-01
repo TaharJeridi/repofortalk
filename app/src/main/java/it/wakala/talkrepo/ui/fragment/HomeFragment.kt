@@ -2,15 +2,10 @@ package it.wakala.talkrepo.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import it.wakala.talkrepo.base.ABaseFragment
 import it.wakala.talkrepo.databinding.HomeFragmentBinding
-import it.wakala.talkrepo.entity.MarvelCharsEntity
-import it.wakala.talkrepo.entity.ResultEntity
 import it.wakala.talkrepo.ext.gridPagination
 import it.wakala.talkrepo.ui.adapter.MarvelCharactersListAdapter
 import it.wakala.talkrepo.ui.state.Loading
@@ -44,14 +39,17 @@ class HomeFragment : ABaseFragment<HomeFragmentBinding>() {
 
         marvelCharactersViewModel.marvelCharactersLiveData.observe(viewLifecycleOwner) {
             if (it.isSuccess) {
-                val marvelChars = it.getOrNull() ?: return@observe
-                when (marvelChars) {
+                val marvelCharsResults = it.getOrNull() ?: return@observe
+                when (marvelCharsResults) {
                     is Loading -> {
                         isLoading = true
+                        mAdapter.addLoading()
+                        binding.marvelCharactersList.smoothScrollToPosition(mAdapter.data.size - 1)
                     }
                     is Success -> {
-                        mAdapter.data = marvelChars.marvelCharsEntity.data.results.toMutableList()
                         isLoading = false
+                        mAdapter.removeLoading()
+                        mAdapter.data = marvelCharsResults.marvelCharactersResultUiModel.toMutableList()
                     }
                 }
 

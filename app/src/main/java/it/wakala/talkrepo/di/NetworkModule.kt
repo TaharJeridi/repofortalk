@@ -33,10 +33,6 @@ object NetworkModule {
     fun provideOkHttpInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
-    /*@Singleton
-    @Provides
-    fun provideAuthInterceptor(@ApplicationContext context: Context): AuthInterceptor = AuthInterceptor(context)*/
-
     @Singleton
     @Provides
     fun provideOkHttpClient(
@@ -103,24 +99,3 @@ object NetworkModule {
         Cache(context.cacheDir, (10 * 1024 * 1024).toLong())
 
 }
-
-/*
-class AuthInterceptor(private val context: Context) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val currentTime = System.currentTimeMillis().toString()
-        val publicApiKey = context.resources.openRawResource(R.raw.public_key).bufferedReader(Charset.defaultCharset()).readLine()
-        val privateApiKey = context.resources.openRawResource(R.raw.private_key).bufferedReader(Charset.defaultCharset()).readLine()
-
-        return chain.run {
-            proceed(
-                chain.request()
-                    .newBuilder()
-                    .addHeader("ts", currentTime)
-                    .addHeader("apikey", publicApiKey)
-                    .addHeader("hash", "$currentTime$publicApiKey$privateApiKey".md5())
-                    .build()
-            )
-        }
-    }
-
-}*/
