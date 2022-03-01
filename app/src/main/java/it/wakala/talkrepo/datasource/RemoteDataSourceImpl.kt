@@ -1,7 +1,6 @@
 package it.wakala.talkrepo.datasource
 
 import it.wakala.talkrepo.api.RemoteApi
-import it.wakala.talkrepo.datasource.RemoteDataSource
 import it.wakala.talkrepo.entity.MarvelCharsEntity
 import it.wakala.talkrepo.mapper.MarvelCharsResponseEntityMapper
 import javax.inject.Inject
