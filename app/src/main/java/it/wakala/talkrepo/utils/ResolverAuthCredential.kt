@@ -7,12 +7,12 @@ object ResolverAuthCredential {
 
     private val TAG = ResolverAuthCredential::class.java.name
 
-    private const val AUTH_CREDENTIAL = "credential/auth_credential.xml"
+    const val AUTH_CREDENTIAL = "credential/auth_credential_" + "%s" + ".xml"
 
-    fun getPublicKey(context: Context): String {
+    fun getPublicKey(fileName: String, context: Context): String {
         var publicKey = ""
         try {
-            val inputStream = context.assets.open(AUTH_CREDENTIAL)
+            val inputStream = context.assets.open(fileName)
             publicKey = XMLAuthParser.parseXML(inputStream, XMLAuthParser.AuthParserType.PUBLIC_KEY)
         } catch (e: Throwable) {
             Timber.d(e)
@@ -20,10 +20,10 @@ object ResolverAuthCredential {
         return publicKey
     }
 
-    fun getPrivateKey(context: Context): String {
+    fun getPrivateKey(fileName: String, context: Context): String {
         var privateKey = ""
         try {
-            val inputStream = context.assets.open(AUTH_CREDENTIAL)
+            val inputStream = context.assets.open(fileName)
             privateKey = XMLAuthParser.parseXML(inputStream, XMLAuthParser.AuthParserType.PRIVATE_KEY)
         } catch (e: Throwable) {
             Timber.d(e)
