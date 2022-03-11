@@ -9,6 +9,8 @@ import it.wakala.talkrepo.databinding.ActivityLoginBinding
 import it.wakala.talkrepo.databinding.ActivityMainBinding
 import it.wakala.talkrepo.ext.getStringText
 import it.wakala.talkrepo.extension.setUpNavController
+import it.wakala.talkrepo.ui.uimodel.ErrorField
+import it.wakala.talkrepo.ui.uimodel.ErrorField.*
 import it.wakala.talkrepo.ui.viewmodel.LoginViewModel
 import timber.log.Timber
 
@@ -22,10 +24,9 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
         super.onCreate(savedInstanceState)
 
         with(loginViewModel) {
-
-            loginLiveData.observe(this@LoginActivity) {result ->
+            loginLiveData.observe(this@LoginActivity) { result ->
                 val data = result.getOrNull()
-                when(data) {
+                when (data) {
                     is StatefulData.Loading -> {
                         Timber.d("Logging in...")
                     }
@@ -37,10 +38,33 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
                     }
                 }
             }
+
+            inputFieldValidationLiveData.observe(this@LoginActivity) {
+                val data = it.getOrNull()
+                when (data) {
+                    is StatefulData.Success -> {
+                        when (data.result.errorField) {
+                            MAIL -> {
+                                binding.mailEt.error = data.result.message
+                            }
+                            NAME -> {
+                                binding.nameEt.error = data.result.message
+                            }
+                            SURNAME -> {
+                                binding.surnameEt.error = data.result.message
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         binding.loginButton.setOnClickListener {
-            loginViewModel.login(binding.mailEt.getStringText(), binding.nameEt.getStringText(), binding.surnameEt.getStringText())
+            loginViewModel.validateInputFields(
+                binding.mailEt.getStringText(),
+                binding.nameEt.getStringText(),
+                binding.surnameEt.getStringText()
+            )
         }
 
     }

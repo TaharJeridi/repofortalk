@@ -6,4 +6,8 @@
     <string name="surname_hint">Surname</string>
     <string name="mail_hint">Email</string>
     <string name="login_btn">Login</string>
+
+    <string name="name_error">Field name is required</string>
+    <string name="surname_error">Field surname is required</string>
+    <string name="mail_error">Field mail is required</string>
 </resources>

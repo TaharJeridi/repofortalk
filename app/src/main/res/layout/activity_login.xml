@@ -1,78 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_login_background"
-    android:orientation="vertical"
-    android:padding="30dp">
+    android:layout_height="match_parent">
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name_il"
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:hint="@string/name_hint"
-        android:textColorHint="@color/white"
-        app:errorEnabled="true">
+        android:background="@drawable/ic_login_background"
+        android:scaleType="centerCrop" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name_et"
-            android:layout_width="match_parent"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_edittext_background" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/surname_il"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
-        android:layout_marginTop="30dp"
-        android:hint="@string/surname_hint"
-        app:errorEnabled="true">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/surname_et"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_il"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-            android:background="@drawable/ic_edittext_background" />
+            android:layout_marginTop="30dp"
+            android:hint="@string/name_hint"
+            android:textColorHint="@color/white"
+            app:errorEnabled="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:textColor="@color/white"
+                android:background="@drawable/ic_edittext_background"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ " />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mail_il"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
-        android:layout_marginTop="30dp"
-        android:hint="@string/mail_hint"
-        app:errorEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mail_et"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/surname_il"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/ic_edittext_background" />
+            android:layout_marginTop="30dp"
+            android:hint="@string/surname_hint"
+            android:textColorHint="@color/white"
+            app:errorEnabled="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/surname_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:textColor="@color/white"
+                android:background="@drawable/ic_edittext_background"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ " />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:textColor="@color/white"
-        android:text="@string/login_btn"
-        android:layout_height="50dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mail_il"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:hint="@string/mail_hint"
+            android:textColorHint="@color/white"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mail_et"
+                android:layout_width="match_parent"
+                android:textColor="@color/white"
+                android:imeOptions="actionDone"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_edittext_background"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="@string/login_btn"
+            android:textColor="@color/white" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>
+

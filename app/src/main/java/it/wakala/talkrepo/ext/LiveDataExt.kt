@@ -1,6 +1,5 @@
 package it.wakala.talkrepo.ext
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import it.wakala.talkrepo.base.StatefulData
 
