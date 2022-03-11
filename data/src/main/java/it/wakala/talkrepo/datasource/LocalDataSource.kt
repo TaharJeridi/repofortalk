@@ -5,5 +5,5 @@ import it.wakala.talkrepo.entity.MarvelCharsEntity
 
 
 interface LocalDataSource {
-    suspend fun login(name: String, surname: String): LoginEntity
+    suspend fun login(mail: String, name: String, surname: String): LoginEntity
 }

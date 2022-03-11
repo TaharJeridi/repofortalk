@@ -30,4 +30,15 @@ object ResolverAuthCredential {
         }
         return privateKey
     }
+
+    fun getMail(fileName: String, context: Context): String {
+        var mail = ""
+        try {
+            val inputStream = context.assets.open(fileName)
+            mail = XMLAuthParser.parseXML(inputStream, XMLAuthParser.AuthParserType.MAIL)
+        } catch (e: Throwable) {
+            Timber.d(e)
+        }
+        return mail
+    }
 }

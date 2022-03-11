@@ -7,6 +7,7 @@ import it.wakala.talkrepo.base.ABaseActivity
 import it.wakala.talkrepo.base.StatefulData
 import it.wakala.talkrepo.databinding.ActivityLoginBinding
 import it.wakala.talkrepo.databinding.ActivityMainBinding
+import it.wakala.talkrepo.ext.getStringText
 import it.wakala.talkrepo.extension.setUpNavController
 import it.wakala.talkrepo.ui.viewmodel.LoginViewModel
 import timber.log.Timber
@@ -26,7 +27,7 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
                 val data = result.getOrNull()
                 when(data) {
                     is StatefulData.Loading -> {
-
+                        Timber.d("Logging in...")
                     }
                     is StatefulData.Success -> {
                         MainActivity.startActivity(this@LoginActivity)
@@ -39,7 +40,7 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
         }
 
         binding.loginButton.setOnClickListener {
-            loginViewModel.login(binding.nameEt.text.toString(), binding.surnameEt.text.toString())
+            loginViewModel.login(binding.mailEt.getStringText(), binding.nameEt.getStringText(), binding.surnameEt.getStringText())
         }
 
     }

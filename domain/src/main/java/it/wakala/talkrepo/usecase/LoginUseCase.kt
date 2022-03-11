@@ -12,9 +12,9 @@ class LoginUseCase @Inject constructor(
 ) : UseCase<LoginUseCase.Params, LoginEntity> {
 
     override suspend fun execute(param: Params): LoginEntity {
-        return localRepository.login(param.name, param.surname)
+        return localRepository.login(param.mail, param.name, param.surname)
     }
 
-    data class Params(val name: String, val surname: String)
+    data class Params(val mail: String, val name: String, val surname: String)
 
 }

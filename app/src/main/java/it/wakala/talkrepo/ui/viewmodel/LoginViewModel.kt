@@ -7,6 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import it.wakala.talkrepo.base.ABaseViewModel
 import it.wakala.talkrepo.base.StatefulData
 import it.wakala.talkrepo.entity.LoginEntity
+import it.wakala.talkrepo.ext.postLoading
+import it.wakala.talkrepo.ext.postSuccess
 import it.wakala.talkrepo.usecase.LoginUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,13 +21,18 @@ class LoginViewModel @Inject constructor(
 ): ABaseViewModel(application) {
 
     val loginLiveData = MutableLiveData<Result<StatefulData<LoginEntity>>>()
+    val inputFieldValidationLiveData = MutableLiveData<Result<StatefulData<LoginEntity>>>()
 
-    fun login(name: String, surname: String) {
+    fun login(mail: String, name: String, surname: String) {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-            loginLiveData.postValue(Result.success(StatefulData.Loading))
-            val loginKeys = loginUseCase.execute(LoginUseCase.Params(name, surname))
-            loginLiveData.postValue(Result.success(StatefulData.Success(loginKeys)))
+            loginLiveData.postLoading()
+            val loginKeys = loginUseCase.execute(LoginUseCase.Params(mail, name, surname))
+            loginLiveData.postSuccess(loginKeys)
         }
+    }
+
+    fun validateInputFields(mail: String, name: String, surname: String) {
+
     }
 
 }

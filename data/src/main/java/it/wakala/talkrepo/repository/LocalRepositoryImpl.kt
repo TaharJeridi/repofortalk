@@ -12,8 +12,8 @@ class LocalRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : LocalRepository {
 
-    override suspend fun login(name: String, surname: String): LoginEntity {
-        return localDataSource.login(name, surname)
+    override suspend fun login(mail: String, name: String, surname: String): LoginEntity {
+        return localDataSource.login(mail, name, surname)
     }
 
 }

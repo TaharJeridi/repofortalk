@@ -4,5 +4,6 @@
     <string name="title_comics">Comics</string>
     <string name="name_hint">Name</string>
     <string name="surname_hint">Surname</string>
+    <string name="mail_hint">Email</string>
     <string name="login_btn">Login</string>
 </resources>
