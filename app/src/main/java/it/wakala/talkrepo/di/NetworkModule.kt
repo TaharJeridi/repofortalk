@@ -12,6 +12,7 @@ import it.wakala.talkrepo.BuildConfig
 import it.wakala.talkrepo.R
 import it.wakala.talkrepo.api.RemoteApi
 import it.wakala.talkrepo.ext.md5
+import it.wakala.talkrepo.interceptor.AuthInterceptor
 import it.wakala.talkrepo.utils.ResolverAuthCredential
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -39,27 +40,12 @@ object NetworkModule {
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
         okHttpLoggingInterceptor: HttpLoggingInterceptor,
-        cache: Cache
+        cache: Cache,
+        authInterceptor: AuthInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .cache(cache)
-            .addInterceptor { chain ->
-                val currentTime = System.currentTimeMillis().toString()
-                val publicApiKey = ResolverAuthCredential.getPublicKey(context)
-                val privateApiKey = ResolverAuthCredential.getPrivateKey(context)
-
-                val request = chain.request()
-                val originalUrl = request.url
-
-                val newUrl = originalUrl.newBuilder()
-                    .addQueryParameter("ts", currentTime)
-                    .addQueryParameter("apikey", publicApiKey)
-                    .addQueryParameter("hash", "$currentTime$privateApiKey$publicApiKey".md5())
-                    .build()
-
-                val newRequest = request.newBuilder().url(newUrl).build()
-                chain.proceed(newRequest)
-            }
+            .addInterceptor(authInterceptor)
             .addInterceptor { chain ->
                 val request = chain.request()
                 val connectivityManager =
@@ -96,5 +82,9 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClientCache(@ApplicationContext context: Context): Cache =
         Cache(context.cacheDir, (10 * 1024 * 1024).toLong())
+
+    @Provides
+    @Singleton
+    fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor()
 
 }

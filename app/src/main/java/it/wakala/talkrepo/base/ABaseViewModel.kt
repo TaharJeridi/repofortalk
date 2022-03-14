@@ -3,6 +3,7 @@ package it.wakala.talkrepo.base
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import it.wakala.talkrepo.ext.postFailure
 import kotlinx.coroutines.CoroutineExceptionHandler
 
 open class ABaseViewModel(application: Application) : AndroidViewModel(application) {
@@ -10,7 +11,7 @@ open class ABaseViewModel(application: Application) : AndroidViewModel(applicati
     val errorLiveData = MutableLiveData<StatefulData.Error>()
 
     var exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        errorLiveData.postValue(StatefulData.Error(exception))
+        errorLiveData.postFailure(exception)
     }
 
 }
