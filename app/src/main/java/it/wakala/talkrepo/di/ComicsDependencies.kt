@@ -1,9 +1,9 @@
-package it.wakala.talkrepo.di.comics
+package it.wakala.talkrepo.di
 
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import it.wakala.talkrepo.base.comics.ComicsUseCase
+import it.wakala.talkrepo.usecase.ComicsUseCase
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)

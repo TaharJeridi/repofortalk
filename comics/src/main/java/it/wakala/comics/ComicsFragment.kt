@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import it.wakala.comics.databinding.ComicsFragmentBinding
+import it.wakala.talkrepo.usecase.ComicsUseCase
 import it.wakala.talkrepo.MarvelViewModelFactory
 import it.wakala.talkrepo.base.ABaseFragment
-import it.wakala.talkrepo.base.comics.ComicsUseCase
 import javax.inject.Inject
 
 

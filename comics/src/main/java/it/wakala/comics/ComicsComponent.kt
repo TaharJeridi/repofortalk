@@ -1,7 +1,7 @@
 package it.wakala.comics
 
 import dagger.Component
-import it.wakala.talkrepo.di.comics.ComicsDependencies
+import it.wakala.talkrepo.di.ComicsDependencies
 
 @Component(dependencies = [ComicsDependencies::class])
 interface ComicsComponent {
@@ -10,7 +10,7 @@ interface ComicsComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(dependencies: ComicsDependencies): ComicsComponent
+        fun create(comicsDependencies: ComicsDependencies): ComicsComponent
     }
 
 }

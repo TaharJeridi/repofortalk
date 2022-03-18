@@ -1,7 +1,7 @@
 package it.wakala.comics
 
 import dagger.hilt.android.EntryPointAccessors
-import it.wakala.talkrepo.di.comics.ComicsDependencies
+import it.wakala.talkrepo.di.ComicsDependencies
 
 fun ComicsFragment.inject() {
     DaggerComicsComponent.factory()
