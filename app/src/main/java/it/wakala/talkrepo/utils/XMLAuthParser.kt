@@ -13,6 +13,8 @@ object XMLAuthParser {
 
     private const val PRIVATE_KEY_TAG = "private_key"
 
+    private const val MAIL_TAG = "mail"
+
     private const val INIT_TAG = "marvelCredential"
 
     fun parseXML(inputStream: InputStream, loginParserType: AuthParserType): String {
@@ -97,6 +99,7 @@ object XMLAuthParser {
             return when (loginParserType) {
                 AuthParserType.PRIVATE_KEY -> PRIVATE_KEY_TAG
                 AuthParserType.PUBLIC_KEY -> PUBLIC_KEY_TAG
+                AuthParserType.MAIL -> MAIL_TAG
             }
         } catch (e: Throwable) {
             Timber.d(e)
@@ -106,7 +109,8 @@ object XMLAuthParser {
 
     enum class AuthParserType {
         PUBLIC_KEY,
-        PRIVATE_KEY
+        PRIVATE_KEY,
+        MAIL
     }
 
 }
