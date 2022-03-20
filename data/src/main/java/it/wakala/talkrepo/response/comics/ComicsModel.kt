@@ -1,4 +1,4 @@
-package it.wakala.talkrepo.response
+package it.wakala.talkrepo.response.comics
 
 import com.squareup.moshi.Json
 import java.io.Serializable
@@ -25,5 +25,8 @@ class ComicsModel:Serializable {
 
     @Json(name = "resourceURI")
     var resourceURI:String? = null
+
+    @Json(name = "thumbnail")
+    var thumbnail:ComicsThumbnailResponse? = null
 
 }

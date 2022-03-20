@@ -1,7 +1,7 @@
 package it.wakala.talkrepo.extension
 
 import it.wakala.talkrepo.comics.ComicsEntity
-import it.wakala.talkrepo.response.ComicsResponse
+import it.wakala.talkrepo.response.comics.ComicsResponse
 
 fun ComicsResponse?.toComicsEntityList(): ArrayList<ComicsEntity> {
     val resultList = ArrayList<ComicsEntity>()
@@ -17,7 +17,9 @@ fun ComicsResponse?.toComicsEntityList(): ArrayList<ComicsEntity> {
                         comics.variantDescription,
                         comics.description,
                         comics.pageCount,
-                        comics.resourceURI
+                        comics.resourceURI,
+                        comics.thumbnail?.path,
+                        comics.thumbnail?.extension
                     )
                 )
             }

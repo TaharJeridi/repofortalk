@@ -1,4 +1,4 @@
-package it.wakala.talkrepo.response
+package it.wakala.talkrepo.response.comics
 
 import com.squareup.moshi.Json
 import java.io.Serializable

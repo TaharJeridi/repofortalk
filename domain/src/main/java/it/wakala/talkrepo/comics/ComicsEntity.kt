@@ -9,5 +9,7 @@ data class ComicsEntity(
     var variantDescription: String? = null,
     var description: String? = null,
     var pageCount: Int? = null,
-    var resourceURI: String? = null
+    var resourceURI: String? = null,
+    var thumbnailPath: String? = null,
+    var thumbnailExtension: String? = null
 ) : Serializable

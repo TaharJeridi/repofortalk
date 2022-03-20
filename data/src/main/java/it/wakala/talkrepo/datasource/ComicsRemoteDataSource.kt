@@ -1,6 +1,6 @@
 package it.wakala.talkrepo.datasource
 
-import it.wakala.talkrepo.response.ComicsResponse
+import it.wakala.talkrepo.response.comics.ComicsResponse
 
 
 interface ComicsRemoteDataSource {

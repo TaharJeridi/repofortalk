@@ -10,4 +10,5 @@ data class ComicsModelView(
     var description: String? = null,
     var pageCount: Int? = null,
     var resourceURI: String? = null,
+    var thumbnailUri: String? = null
 ) : Serializable
