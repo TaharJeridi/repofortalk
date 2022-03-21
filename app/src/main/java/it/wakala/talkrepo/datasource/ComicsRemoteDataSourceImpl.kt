@@ -10,8 +10,8 @@ class ComicsRemoteDataSourceImpl @Inject constructor(
 ) : ComicsRemoteDataSource {
 
 
-    override suspend fun getMarvelComics(): ComicsResponse? {
-        return comicsAPI.getMarvelComics()
+    override suspend fun getMarvelComics(offset:Int): ComicsResponse? {
+        return comicsAPI.getMarvelComics(offset)
     }
 
 }

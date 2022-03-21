@@ -8,9 +8,9 @@ import it.wakala.talkrepo.modelview.ComicsModelView
 class ComicsViewHolder(private val itemComicsBinding: ItemComicsBinding) :
     RecyclerView.ViewHolder(itemComicsBinding.root) {
 
-    fun bind(comicsModelView: ComicsModelView) {
-        itemComicsBinding.tvComicsDescription.text = comicsModelView.title
-        Glide.with(itemView.context).load(comicsModelView.thumbnailUri)
+    fun bind(comicsModelView: ComicsModelView?) {
+        itemComicsBinding.tvComicsDescription.text = comicsModelView?.title
+        Glide.with(itemView.context).load(comicsModelView?.thumbnailUri)
             .into(itemComicsBinding.ivThumbnailComics)
 
     }

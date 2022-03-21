@@ -5,6 +5,6 @@ import it.wakala.talkrepo.response.comics.ComicsResponse
 
 interface ComicsRemoteDataSource {
 
-    suspend fun getMarvelComics(): ComicsResponse?
+    suspend fun getMarvelComics(offset: Int): ComicsResponse?
 
 }

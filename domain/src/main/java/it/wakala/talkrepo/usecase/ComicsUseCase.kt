@@ -6,10 +6,10 @@ import it.wakala.talkrepo.comics.ComicsEntity
 import javax.inject.Inject
 
 class ComicsUseCase @Inject constructor(private var comicsRepository: ComicsRepository) :
-    UseCase<Any?, ArrayList<ComicsEntity>> {
+    UseCase<Int, ArrayList<ComicsEntity>> {
 
-    override suspend fun execute(param: Any?): ArrayList<ComicsEntity> {
-        return comicsRepository.fetchComics()
+    override suspend fun execute(param: Int): ArrayList<ComicsEntity> {
+        return comicsRepository.fetchComics(param)
     }
 
 }

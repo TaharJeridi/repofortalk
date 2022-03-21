@@ -8,8 +8,8 @@ import it.wakala.talkrepo.extension.toComicsEntityList
 class ComicsRepositoryImpl(private val comicsRemoteDataSource: ComicsRemoteDataSource) :
     ComicsRepository {
 
-    override suspend fun fetchComics(): ArrayList<ComicsEntity> {
-        return comicsRemoteDataSource.getMarvelComics().toComicsEntityList()
+    override suspend fun fetchComics(offset: Int): ArrayList<ComicsEntity> {
+        return comicsRemoteDataSource.getMarvelComics(offset).toComicsEntityList()
     }
 
 }

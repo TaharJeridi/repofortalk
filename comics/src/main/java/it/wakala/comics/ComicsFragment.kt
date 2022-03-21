@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import it.wakala.comics.databinding.ComicsFragmentBinding
 import it.wakala.talkrepo.usecase.ComicsUseCase
@@ -28,8 +29,8 @@ class ComicsFragment : ABaseFragment<ComicsFragmentBinding>() {
         )
     }
 
-    private val observerComics = Observer<ArrayList<ComicsModelView>> {
-        comicsAdapter.updateComicsList(it)
+    private val observerComics = Observer<PagingData<ComicsModelView>> {
+        comicsAdapter.submitData(lifecycle, it)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

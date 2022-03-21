@@ -4,6 +4,6 @@ import it.wakala.talkrepo.comics.ComicsEntity
 
 interface ComicsRepository {
 
-    suspend fun fetchComics(): ArrayList<ComicsEntity>
+    suspend fun fetchComics(offset: Int): ArrayList<ComicsEntity>
 
 }
