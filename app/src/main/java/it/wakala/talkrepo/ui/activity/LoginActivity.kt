@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import it.wakala.talkrepo.base.ABaseActivity
@@ -39,8 +40,7 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
 
         with(loginViewModel) {
             loginLiveData.observe(this@LoginActivity) { result ->
-                val data = result.getOrNull()
-                when (data) {
+                when (result.getOrNull()) {
                     is StatefulData.Loading -> {
                         Timber.d("Logging in...")
                     }
@@ -48,10 +48,13 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
                         MainActivity.startActivity(this@LoginActivity)
                         finish()
                     }
-                    else -> {
-
-                    }
+                    else -> {}
                 }
+
+                errorLiveData.observe(this@LoginActivity) {
+                    Toast.makeText(this@LoginActivity, "Wrong credentials", Toast.LENGTH_SHORT).show()
+                }
+
             }
 
             inputFieldValidationLiveData.observe(this@LoginActivity) {
