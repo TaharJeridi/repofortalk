@@ -45,7 +45,7 @@ class MarvelCharactersListAdapter: PagingDataAdapter<MarvelCharactersResult, Rec
         (holder as MarvelCharactersViewHolder).render(getItem(position))
     }
 
-    inner class MarvelCharactersViewHolder(val binding: ItemViewMarvelCharacterBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class MarvelCharactersViewHolder(private val binding: ItemViewMarvelCharacterBinding): RecyclerView.ViewHolder(binding.root) {
         fun render(value: MarvelCharactersResult?) {
             with(binding) {
                 Glide.with(heroIv)
