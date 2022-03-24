@@ -39,24 +39,26 @@ class LoginViewModel @Inject constructor(
     }
 
     fun validateInputFields(mail: String, name: String, surname: String) {
-        when {
-            mail.isEmpty() -> {
-                inputFieldValidationLiveData.postSuccess(
-                    InputValidationUiModel(getApplication<Application>().getString(R.string.mail_error), ErrorField.MAIL)
-                )
-            }
-            name.isEmpty() -> {
-                inputFieldValidationLiveData.postSuccess(
-                    InputValidationUiModel(getApplication<Application>().getString(R.string.name_error), ErrorField.NAME)
-                )
-            }
-            surname.isEmpty() -> {
-                inputFieldValidationLiveData.postSuccess(
-                    InputValidationUiModel(getApplication<Application>().getString(R.string.surname_error), ErrorField.SURNAME)
-                )
-            }
-            else -> {
-                login(mail, name, surname)
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+            when {
+                mail.isEmpty() -> {
+                    inputFieldValidationLiveData.postSuccess(
+                        InputValidationUiModel(getApplication<Application>().getString(R.string.mail_error), ErrorField.MAIL)
+                    )
+                }
+                name.isEmpty() -> {
+                    inputFieldValidationLiveData.postSuccess(
+                        InputValidationUiModel(getApplication<Application>().getString(R.string.name_error), ErrorField.NAME)
+                    )
+                }
+                surname.isEmpty() -> {
+                    inputFieldValidationLiveData.postSuccess(
+                        InputValidationUiModel(getApplication<Application>().getString(R.string.surname_error), ErrorField.SURNAME)
+                    )
+                }
+                else -> {
+                    login(mail, name, surname)
+                }
             }
         }
     }

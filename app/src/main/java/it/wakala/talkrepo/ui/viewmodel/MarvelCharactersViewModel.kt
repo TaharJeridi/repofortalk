@@ -1,47 +1,54 @@
 package it.wakala.talkrepo.ui.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import it.wakala.talkrepo.base.ABaseViewModel
 import it.wakala.talkrepo.base.StatefulData
-import it.wakala.talkrepo.ui.state.Loading
-import it.wakala.talkrepo.ui.state.MarvelCharactersState
-import it.wakala.talkrepo.ui.state.Success
+import it.wakala.talkrepo.extension.flowOnExceptionHandlerIO
+import it.wakala.talkrepo.extension.toComicsModelViewList
+import it.wakala.talkrepo.modelview.ComicsModelView
 import it.wakala.talkrepo.ui.uimodel.MarvelCharactersResult
 import it.wakala.talkrepo.ui.uimodel.toUiModel
 import it.wakala.talkrepo.usecase.GetMarvelCharactersUseCase
+import it.wakala.talkrepo.utils.IPagingSourceViewModelCallback
+import it.wakala.talkrepo.utils.PaginatedDataSource
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MarvelCharactersViewModel @Inject constructor(
     application: Application,
     private val getMarvelCharactersUseCase: GetMarvelCharactersUseCase
-) : ABaseViewModel(application) {
+) : ABaseViewModel(application), IPagingSourceViewModelCallback<MarvelCharactersResult> {
 
-    val marvelCharactersLiveData =
-        MutableLiveData<Result<StatefulData<List<MarvelCharactersResult>>>>()
 
-    private var currentOffset = 0
-
-    fun getMarvelCharactersList(increaseOffset: Boolean = false) {
-        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-                marvelCharactersLiveData.postValue(Result.success(StatefulData.Loading))
-                if (increaseOffset) currentOffset += 20
-                val marvelCharacters = getMarvelCharactersUseCase.execute(
-                    GetMarvelCharactersUseCase.Params(currentOffset)
-                )
-                marvelCharactersLiveData.postValue(
-                    Result.success(
-                        StatefulData.Success<List<MarvelCharactersResult>>(
-                            marvelCharacters.data.results.map { it.toUiModel() })
-                    )
-                )
+    override suspend fun onLoadMore(
+        nextPage: Int,
+        completableDeferred: CompletableDeferred<List<MarvelCharactersResult>>
+    ) {
+        try {
+            completableDeferred.complete(
+                getMarvelCharactersUseCase.execute(GetMarvelCharactersUseCase.Params(nextPage * 20)).data.results.map { it.toUiModel() }
+            )
+        } catch (e: Throwable) {
+            //do nothing here
         }
     }
+
+    fun fetchMarvelCharactersList(): LiveData<PagingData<MarvelCharactersResult>> =
+            Pager(PagingConfig(pageSize = 20)) {
+                PaginatedDataSource(this@MarvelCharactersViewModel)
+            }.liveData
 
 }
