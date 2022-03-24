@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<it.wakala.talkrepo.ui.widget.shimmerrv.ListShimmerContainer xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,4 +15,4 @@
         app:spanCount="3"
         tools:listitem="@layout/item_view_marvel_character" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</it.wakala.talkrepo.ui.widget.shimmerrv.ListShimmerContainer>
