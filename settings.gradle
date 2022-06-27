@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         maven { url 'https://jitpack.io' }
+        //noinspection JcenterRepositoryObsolete
         jcenter()
         mavenCentral()
     }
@@ -17,3 +18,6 @@ dependencyResolutionManagement {
 }
 include ':app', ':data', ':domain'
 include ':comics'
+include ':utils'
+include ':network'
+include ':database'

@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import it.wakala.talkrepo.LogHelper
 import it.wakala.talkrepo.base.ABaseFragment
 import it.wakala.talkrepo.databinding.HomeFragmentBinding
+import it.wakala.talkrepo.notNullOrEmpty
 import it.wakala.talkrepo.ui.adapter.MarvelCharactersListAdapter
 import it.wakala.talkrepo.ui.viewmodel.MarvelCharactersViewModel
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : ABaseFragment<HomeFragmentBinding>() {
@@ -29,7 +30,7 @@ class HomeFragment : ABaseFragment<HomeFragmentBinding>() {
         }
 
         marvelCharactersViewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Timber.e(it.error)
+            LogHelper.e(HomeFragment::class.java.name,it.error.message.notNullOrEmpty())
         }
 
         marvelCharactersViewModel.fetchMarvelCharactersList().observe(viewLifecycleOwner) {

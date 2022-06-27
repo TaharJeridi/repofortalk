@@ -1,27 +1,33 @@
-apply plugin: 'java-library'
-apply plugin: 'org.jetbrains.kotlin.jvm'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+def config = rootProject.extensions.getByName("ext")
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        minSdk 23
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+    }
+
+}
 
 dependencies {
 
-    implementation project(':domain')
-    testImplementation 'junit:junit:4.13.2'
+    api project(':domain')
 
-    kapt "com.google.dagger:hilt-compiler:2.38.1"
+    api config.dataDependencies.googleConverterFactory
+    api config.dataDependencies.moshiConverterFactory
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-
-    implementation "com.squareup.okhttp3:okhttp:4.9.1"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
-
-    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
-
-    implementation "javax.inject:javax.inject:1"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
-
-
-    implementation "com.google.dagger:hilt-core:2.38.1"
-    kapt "com.google.dagger:hilt-compiler:2.38.1"
+    testImplementation config.unitTestDependencies.junit
+    androidTestImplementation config.unitTestDependencies.junitExt
+    androidTestImplementation config.uiTestDependencies.espresso
 }
 
 java {

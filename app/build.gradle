@@ -5,7 +5,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-apply from: './dependencies.gradle'
+def config = rootProject.extensions.getByName("ext")
+
 apply from: './flavors.gradle'
 
 
@@ -44,4 +45,29 @@ android {
         jvmTarget = '1.8'
     }
     dynamicFeatures = [':comics']
+}
+
+dependencies {
+
+    api project(':data')
+    api project(':domain')
+
+
+    implementation config.commonDependencies.androidXCore
+    implementation config.commonDependencies.material
+    implementation config.commonDependencies.appCompat
+
+    implementation config.splashScreenDependencies.splashAndroid12
+
+    implementation config.hiltDependencies.hiltCore
+    kapt config.hiltDependencies.hiltCompiler
+    implementation config.hiltDependencies.hiltAndroid
+
+    testImplementation config.unitTestDependencies.junit
+    androidTestImplementation config.unitTestDependencies.junitExt
+    androidTestImplementation config.uiTestDependencies.espresso
+
+
+
+
 }

@@ -1,7 +1,7 @@
 package it.wakala.talkrepo.utils
 
 import android.content.Context
-import timber.log.Timber
+import it.wakala.talkrepo.LogHelper
 
 object ResolverAuthCredential {
 
@@ -15,7 +15,7 @@ object ResolverAuthCredential {
             val inputStream = context.assets.open(fileName)
             publicKey = XMLAuthParser.parseXML(inputStream, XMLAuthParser.AuthParserType.PUBLIC_KEY)
         } catch (e: Throwable) {
-            Timber.d(e)
+            LogHelper.printStackTrace(TAG,e)
         }
         return publicKey
     }
@@ -26,7 +26,7 @@ object ResolverAuthCredential {
             val inputStream = context.assets.open(fileName)
             privateKey = XMLAuthParser.parseXML(inputStream, XMLAuthParser.AuthParserType.PRIVATE_KEY)
         } catch (e: Throwable) {
-            Timber.d(e)
+            LogHelper.printStackTrace(TAG,e)
         }
         return privateKey
     }
@@ -37,7 +37,7 @@ object ResolverAuthCredential {
             val inputStream = context.assets.open(fileName)
             mail = XMLAuthParser.parseXML(inputStream, XMLAuthParser.AuthParserType.MAIL)
         } catch (e: Throwable) {
-            Timber.d(e)
+            LogHelper.printStackTrace(TAG,e)
         }
         return mail
     }

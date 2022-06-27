@@ -2,28 +2,18 @@ package it.wakala.talkrepo.ui.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import it.wakala.talkrepo.base.ABaseViewModel
-import it.wakala.talkrepo.base.StatefulData
-import it.wakala.talkrepo.extension.flowOnExceptionHandlerIO
-import it.wakala.talkrepo.extension.toComicsModelViewList
-import it.wakala.talkrepo.modelview.ComicsModelView
 import it.wakala.talkrepo.ui.uimodel.MarvelCharactersResult
 import it.wakala.talkrepo.ui.uimodel.toUiModel
 import it.wakala.talkrepo.usecase.GetMarvelCharactersUseCase
 import it.wakala.talkrepo.utils.IPagingSourceViewModelCallback
 import it.wakala.talkrepo.utils.PaginatedDataSource
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

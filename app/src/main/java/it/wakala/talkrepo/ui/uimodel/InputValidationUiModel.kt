@@ -5,8 +5,8 @@ data class InputValidationUiModel(
     val errorField: ErrorField
 )
 
-enum class ErrorField(value: String) {
-    NAME("NAME"),
-    SURNAME("SURNAME"),
-    MAIL("MAIL"),
+enum class ErrorField {
+    NAME,
+    SURNAME,
+    MAIL,
 }

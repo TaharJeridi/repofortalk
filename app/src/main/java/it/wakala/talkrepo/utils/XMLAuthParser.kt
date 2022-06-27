@@ -1,8 +1,8 @@
 package it.wakala.talkrepo.utils
 
 import android.util.Xml
+import it.wakala.talkrepo.LogHelper
 import org.xmlpull.v1.XmlPullParser
-import timber.log.Timber
 import java.io.InputStream
 
 object XMLAuthParser {
@@ -17,6 +17,10 @@ object XMLAuthParser {
 
     private const val INIT_TAG = "marvelCredential"
 
+    private const val NAME_TAG = "name"
+
+    private const val SURNAME_TAG = "surname"
+
     fun parseXML(inputStream: InputStream, loginParserType: AuthParserType): String {
         try {
             inputStream.use {
@@ -27,7 +31,7 @@ object XMLAuthParser {
                 return readXml(parser, loginParserType)
             }
         } catch (e: Throwable) {
-            Timber.e(e)
+            LogHelper.printStackTrace(TAG,e)
         }
         return ""
     }
@@ -47,7 +51,7 @@ object XMLAuthParser {
                 }
             }
         } catch (e: Throwable) {
-            Timber.e(e)
+            LogHelper.printStackTrace(TAG,e)
         }
         return resultString
     }
@@ -59,7 +63,7 @@ object XMLAuthParser {
             credential = readText(parser)
             parser.require(XmlPullParser.END_TAG, null, getParserValue(loginParserType))
         } catch (e: Throwable) {
-            Timber.e(e)
+            LogHelper.printStackTrace(TAG,e)
         }
         return credential
     }
@@ -72,7 +76,7 @@ object XMLAuthParser {
                 parser.nextTag()
             }
         } catch (e: Throwable) {
-            Timber.e(e)
+            LogHelper.printStackTrace(TAG,e)
         }
         return resultString
     }
@@ -90,7 +94,7 @@ object XMLAuthParser {
                 }
             }
         } catch (e: Throwable) {
-            Timber.e(e)
+            LogHelper.printStackTrace(TAG,e)
         }
     }
 
@@ -100,9 +104,11 @@ object XMLAuthParser {
                 AuthParserType.PRIVATE_KEY -> PRIVATE_KEY_TAG
                 AuthParserType.PUBLIC_KEY -> PUBLIC_KEY_TAG
                 AuthParserType.MAIL -> MAIL_TAG
+                AuthParserType.NAME -> NAME_TAG
+                AuthParserType.SURNAME -> SURNAME_TAG
             }
         } catch (e: Throwable) {
-            Timber.d(e)
+            LogHelper.printStackTrace(TAG,e)
         }
         return ""
     }
@@ -110,7 +116,9 @@ object XMLAuthParser {
     enum class AuthParserType {
         PUBLIC_KEY,
         PRIVATE_KEY,
-        MAIL
+        MAIL,
+        NAME,
+        SURNAME
     }
 
 }

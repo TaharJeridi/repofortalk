@@ -7,13 +7,15 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import it.wakala.talkrepo.BuildConfig
+import it.wakala.talkrepo.LogHelper
 import it.wakala.talkrepo.base.ABaseActivity
 import it.wakala.talkrepo.base.StatefulData
 import it.wakala.talkrepo.databinding.ActivityLoginBinding
 import it.wakala.talkrepo.ext.getStringText
 import it.wakala.talkrepo.ui.uimodel.ErrorField.*
 import it.wakala.talkrepo.ui.viewmodel.LoginViewModel
-import timber.log.Timber
+import it.wakala.talkrepo.utils.ResolverDebugFieldLoginCredential
 
 @AndroidEntryPoint
 class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
@@ -24,7 +26,7 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.mailEt.setOnEditorActionListener { textView, action, keyEvent ->
+        binding.mailEt.setOnEditorActionListener { textView, action, _ ->
             if (action == EditorInfo.IME_ACTION_DONE) {
                 val imm: InputMethodManager = textView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(textView.windowToken, 0)
@@ -42,13 +44,15 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
             loginLiveData.observe(this@LoginActivity) { result ->
                 when (result.getOrNull()) {
                     is StatefulData.Loading -> {
-                        Timber.d("Logging in...")
+                        LogHelper.d(LoginActivity::class.java.name,"Logging in...")
                     }
                     is StatefulData.Success -> {
                         MainActivity.startActivity(this@LoginActivity)
                         finish()
                     }
-                    else -> {}
+                    else -> {
+                        //do nothing here
+                    }
                 }
 
                 errorLiveData.observe(this@LoginActivity) {
@@ -58,8 +62,7 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
             }
 
             inputFieldValidationLiveData.observe(this@LoginActivity) {
-                val data = it.getOrNull()
-                when (data) {
+                when (val data = it.getOrNull()) {
                     is StatefulData.Success -> {
                         when (data.result.errorField) {
                             MAIL -> {
@@ -73,6 +76,9 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
                             }
                         }
                     }
+                    else -> {
+                        //do nothing here
+                    }
                 }
             }
         }
@@ -85,10 +91,28 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
             )
         }
 
+        fillDebugField()
+
     }
+
+    /*
+     * ABaseActivity method
+     */
 
     override fun setBinding(): ActivityLoginBinding {
         return ActivityLoginBinding.inflate(layoutInflater)
+    }
+
+    /*
+     * private method
+     */
+
+    private fun fillDebugField(){
+        if(BuildConfig.DEBUG){
+            binding.nameEt.setText(ResolverDebugFieldLoginCredential.getName(this))
+            binding.surnameEt.setText(ResolverDebugFieldLoginCredential.getSurname(this))
+            binding.mailEt.setText(ResolverDebugFieldLoginCredential.getMail(this))
+        }
     }
 
 }
