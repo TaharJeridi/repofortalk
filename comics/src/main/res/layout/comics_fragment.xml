@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        android:paddingBottom="80dp"
         android:scrollbars="none"
         tools:itemCount="20"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

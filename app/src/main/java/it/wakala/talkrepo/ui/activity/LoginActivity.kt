@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import it.wakala.talkrepo.BuildConfig
 import it.wakala.talkrepo.LogHelper
+import it.wakala.talkrepo.R
 import it.wakala.talkrepo.base.ABaseActivity
 import it.wakala.talkrepo.base.StatefulData
 import it.wakala.talkrepo.databinding.ActivityLoginBinding
@@ -16,6 +17,7 @@ import it.wakala.talkrepo.ext.getStringText
 import it.wakala.talkrepo.ui.uimodel.ErrorField.*
 import it.wakala.talkrepo.ui.viewmodel.LoginViewModel
 import it.wakala.talkrepo.utils.ResolverDebugFieldLoginCredential
+import it.wakala.talkrepo.utils.extension.setStatusBarColor
 
 @AndroidEntryPoint
 class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
@@ -25,6 +27,7 @@ class LoginActivity : ABaseActivity<ActivityLoginBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStatusBarColor(R.color.marvel_blu)
 
         binding.mailEt.setOnEditorActionListener { textView, action, _ ->
             if (action == EditorInfo.IME_ACTION_DONE) {

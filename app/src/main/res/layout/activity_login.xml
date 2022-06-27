@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_login_background"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_marvel"
         android:scaleType="centerCrop" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -37,7 +37,7 @@
                 android:maxLines="1"
                 android:inputType="text"
                 android:textColor="@color/white"
-                android:background="@drawable/ic_edittext_background" />
+                android:background="@drawable/ic_edittext_background_transparent"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,7 +49,6 @@
             android:layout_marginTop="30dp"
             android:hint="@string/surname_hint"
             android:textColorHint="@color/white"
-            app:hintTextColor="@color/shimmer_placeholder"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -60,7 +59,7 @@
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:inputType="text"
-                android:background="@drawable/ic_edittext_background"/>
+                android:background="@drawable/ic_edittext_background_transparent"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +71,6 @@
             android:layout_marginTop="30dp"
             android:hint="@string/mail_hint"
             android:textColorHint="@color/white"
-            app:hintTextColor="@color/shimmer_placeholder"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -83,7 +81,7 @@
                 android:maxLines="1"
                 android:inputType="textEmailAddress"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_edittext_background"/>
+                android:background="@drawable/ic_edittext_background_transparent"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

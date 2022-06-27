@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RoundedCornerLayout">
+        <attr name="topStartRadius" format="dimension"/>
+        <attr name="topEndRadius" format="dimension"/>
+        <attr name="bottomStartRadius" format="dimension"/>
+        <attr name="bottomEndRadius" format="dimension"/>
+        <attr name="radius" format="dimension"/>
+    </declare-styleable>
+
+</resources>
