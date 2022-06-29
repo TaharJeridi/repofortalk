@@ -2,7 +2,7 @@ package it.wakala.talkrepo.usecase
 
 import it.wakala.talkrepo.base.UseCase
 import it.wakala.talkrepo.entity.MarvelCharsEntity
-import it.wakala.talkrepo.repositories.RemoteRepository
+import it.wakala.talkrepo.repository.RemoteRepository
 import javax.inject.Inject
 
 class GetMarvelCharactersUseCase @Inject constructor(

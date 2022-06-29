@@ -2,7 +2,7 @@ package it.wakala.talkrepo.usecase
 
 import it.wakala.talkrepo.base.UseCase
 import it.wakala.talkrepo.entity.LoginEntity
-import it.wakala.talkrepo.repositories.LocalRepository
+import it.wakala.talkrepo.repository.LocalRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(

@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    api project(':utils')
+    api project(':database')
 
     api config.networkDependencies.retrofit
     api config.networkDependencies.okHttp

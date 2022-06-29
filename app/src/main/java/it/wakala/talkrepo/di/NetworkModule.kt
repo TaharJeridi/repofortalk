@@ -1,6 +1,5 @@
 package it.wakala.talkrepo.di
 
-import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import dagger.Module
@@ -9,21 +8,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import it.wakala.talkrepo.BuildConfig
-import it.wakala.talkrepo.R
 import it.wakala.talkrepo.api.RemoteApi
-import it.wakala.talkrepo.ext.md5
 import it.wakala.talkrepo.interceptor.AuthInterceptor
-import it.wakala.talkrepo.utils.ResolverAuthCredential
 import okhttp3.Cache
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import okio.HashingSink
-import okio.Sink
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.nio.charset.Charset
 import javax.inject.Singleton
 
 @Module

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 def config = rootProject.extensions.getByName("ext")
@@ -32,7 +33,16 @@ android {
 }
 
 dependencies {
+
+    api project(':utils')
+
+    api config.databaseDependencies.roomKtx
+    kapt config.databaseDependencies.roomCompiler
+
     testImplementation config.unitTestDependencies.junit
     androidTestImplementation config.unitTestDependencies.junitExt
     androidTestImplementation config.uiTestDependencies.espresso
+
+
+
 }

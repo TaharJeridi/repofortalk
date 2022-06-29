@@ -15,6 +15,8 @@ import it.wakala.talkrepo.modelview.ComicsModelView
 import it.wakala.talkrepo.utils.IPagingSourceViewModelCallback
 import it.wakala.talkrepo.utils.PaginatedDataSource
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ComicsViewModel constructor(
     application: Application,
@@ -30,12 +32,10 @@ class ComicsViewModel constructor(
         nextPage: Int,
         completableDeferred: CompletableDeferred<List<ComicsModelView>>
     ) {
-        try {
+        withContext(Dispatchers.IO){
             completableDeferred.complete(
                 comicsUseCase.execute(nextPage * 20).toComicsModelViewList()
             )
-        } catch (e: Throwable) {
-            //do nothing here
         }
 
     }

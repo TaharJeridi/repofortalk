@@ -1,6 +1,6 @@
 package it.wakala.talkrepo.extension
 
-import it.wakala.talkrepo.comics.ComicsEntity
+import it.wakala.talkrepo.entity.ComicsEntity
 import it.wakala.talkrepo.response.comics.ComicsResponse
 
 fun ComicsResponse?.toComicsEntityList(): ArrayList<ComicsEntity> {

@@ -20,7 +20,7 @@ android {
 
 dependencies {
 
-    api project(':domain')
+    api project(':network')
 
     api config.dataDependencies.googleConverterFactory
     api config.dataDependencies.moshiConverterFactory

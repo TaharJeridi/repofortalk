@@ -52,6 +52,8 @@ ext {
 
     glide = "4.13.0"
 
+    roomVersion = "2.4.2"
+
     commonDependencies = [
             androidXCore : "androidx.core:core-ktx:${androidXCore}",
             material : "com.google.android.material:material:${material}",
@@ -100,6 +102,11 @@ ext {
             navigationUiKtx: "androidx.navigation:navigation-ui-ktx:${navComponent}",
             glide: "com.github.bumptech.glide:glide:${glide}",
             glideCompiler: "com.github.bumptech.glide:compiler:${glide}"
+    ]
+
+    databaseDependencies = [
+            roomKtx : "androidx.room:room-ktx:${roomVersion}",
+            roomCompiler : "androidx.room:room-compiler:${roomVersion}"
     ]
 
 }

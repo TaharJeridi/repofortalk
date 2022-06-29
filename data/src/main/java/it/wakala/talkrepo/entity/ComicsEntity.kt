@@ -1,4 +1,4 @@
-package it.wakala.talkrepo.comics
+package it.wakala.talkrepo.entity
 
 import java.io.Serializable
 

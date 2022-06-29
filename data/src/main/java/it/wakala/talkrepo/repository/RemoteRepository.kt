@@ -1,4 +1,4 @@
-package it.wakala.talkrepo.repositories
+package it.wakala.talkrepo.repository
 
 import it.wakala.talkrepo.entity.MarvelCharsEntity
 

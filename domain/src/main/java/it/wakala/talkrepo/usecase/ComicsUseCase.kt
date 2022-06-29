@@ -1,15 +1,21 @@
 package it.wakala.talkrepo.usecase
 
-import it.wakala.talkrepo.repositories.ComicsRepository
 import it.wakala.talkrepo.base.UseCase
-import it.wakala.talkrepo.comics.ComicsEntity
+import it.wakala.talkrepo.database.ComicsTable
+import it.wakala.talkrepo.extension.toComicsTableList
+import it.wakala.talkrepo.repository.ComicsRepository
 import javax.inject.Inject
 
 class ComicsUseCase @Inject constructor(private var comicsRepository: ComicsRepository) :
-    UseCase<Int, ArrayList<ComicsEntity>> {
+    UseCase<Int, ArrayList<ComicsTable>> {
 
-    override suspend fun execute(param: Int): ArrayList<ComicsEntity> {
-        return comicsRepository.fetchComics(param)
+    override suspend fun execute(param: Int): ArrayList<ComicsTable> {
+        val comicsEntity = comicsRepository.fetchComics(param)
+        val comicsTableList = comicsEntity.toComicsTableList()
+        for(comicsTable in comicsTableList){
+            comicsRepository.insertComics(comicsTable)
+        }
+        return comicsTableList
     }
 
 }
